@@ -1,14 +1,24 @@
+import { getNamespace } from 'continuation-local-storage'
 import winston, { format, transports } from 'winston'
+import configs from '@configs'
 
-const logFormats = [format.json()]
+const { combine, timestamp, printf } = format
+
+const logFormats = combine(
+  timestamp(),
+  printf((log) => {
+    const NS = getNamespace(configs.cls.namespace)
+    const corrId = (NS?.get(configs.cls.correlationIdField) || '') as string
+
+    return `${log.timestamp} - <${corrId}> - [${log.level}] - ${log.message}`
+  })
+)
 
 export const log = winston.createLogger({
-  level: 'info',
-  format: format.combine(...logFormats),
   // defaultMeta: { service: configs.serviceName }, // If you want the name to be in every log, use it
   transports: [
     new transports.Console({
-      format: format.simple()
+      format: logFormats
     })
     //
     // - Write all logs with level `error` and below to `error.log`
@@ -18,15 +28,3 @@ export const log = winston.createLogger({
     // new transports.File({ filename: 'combined.log' })
   ]
 })
-
-//
-// If we're not in production then log to the `console` with the format:
-// `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
-//
-// if (process.env.NODE_ENV !== 'production') {
-//   log.add(
-//     new transports.Console({
-//       format: format.combine(format.simple(), format.colorize())
-//     })
-//   )
-// }
