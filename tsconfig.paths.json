@@ -13,10 +13,7 @@
       ],
       "@middlewares/*": [
         "src/middlewares/*"
-      ],
-      "@validators/*": [
-        "src/validators/*"
-      ],
+      ]
     }
   }
 }
