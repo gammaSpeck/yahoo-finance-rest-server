@@ -1,4 +1,5 @@
-// Right now not being used, but can be used for env vars
-export const configs = {
-  serviceName: 'md-sentiment-analyzer'
-} as const
+export const configs = () => ({
+  rapidAPIKey: process.env.RAPID_API_KEY || 'DEV_KEY'
+})
+
+export default configs()
