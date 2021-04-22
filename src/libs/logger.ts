@@ -10,11 +10,13 @@ const logFormats = combine(
     const NS = getNamespace(configs.cls.namespace)
     const corrId = (NS?.get(configs.cls.correlationIdField) || '') as string
 
-    return `${log.timestamp} - <${corrId}> - [${log.level}] - ${log.message}`
+    return `${log.timestamp} - <${corrId}> - [${log.level}] - ${
+      log.message
+    } - [DATA]:: ${JSON.stringify(log.data)}`
   })
 )
 
-export const log = winston.createLogger({
+const logger = winston.createLogger({
   // defaultMeta: { service: configs.serviceName }, // If you want the name to be in every log, use it
   transports: [
     new transports.Console({
@@ -28,3 +30,12 @@ export const log = winston.createLogger({
     // new transports.File({ filename: 'combined.log' })
   ]
 })
+
+export const log = {
+  info: (message: string, data: any) => {
+    logger.info({ message, data })
+  },
+  error: (message: string, error: any) => {
+    logger.error({ message, error })
+  }
+}

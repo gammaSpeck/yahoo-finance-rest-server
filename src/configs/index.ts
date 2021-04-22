@@ -1,5 +1,5 @@
 export const configs = () => ({
-  host: process.env.HOST || '0.0.0.0',
+  host: process.env.HOST || 'localhost',
   port: Number(process.env.PORT) || 3000,
   rapidAPIKey: process.env.RAPID_API_KEY || 'DEV_KEY',
   cls: {

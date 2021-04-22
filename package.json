@@ -1,8 +1,10 @@
 {
   "name": "yahoo-finance-api-wrapper",
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "ts-node ./src/index.ts"
+  },
   "dependencies": {
     "ajv": "^8.1.0",
     "axios": "^0.21.1",
