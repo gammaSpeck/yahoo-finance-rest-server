@@ -9,7 +9,7 @@ import configs from '@configs'
  * Error handler middleware. Use this AFTER all you other routes and middlewares are used.
  * This shall always send back a consistent looking error response.
  */
-export const mErrorHandler = (err: Error, req: Request, res: Response, _: NextFunction) => {
+export const mErrorHandler = (err: Error, __: Request, res: Response, _: NextFunction) => {
   log.error(`\n----- : Error caught by Error Handler : -----\n`, err)
 
   const NS = getNamespace(configs.cls.namespace)
