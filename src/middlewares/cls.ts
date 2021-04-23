@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { createNamespace } from 'continuation-local-storage'
+import { createNamespace } from 'cls-hooked'
 import { nanoid } from 'nanoid'
 
 import configs from '@configs'
@@ -17,7 +17,6 @@ export const mInitCLS = (req: Request, res: Response, next: NextFunction) => {
 
   res.set('Pragma', 'no-cache')
   res.set('Cache-Control', ['no-cache', 'no-store', 'must-revalidate'])
-  res.set(corrIdFieldName, corrIdVal) // Used as fallback in error handler
 
   CLS_NS.run(() => {
     CLS_NS.set(corrIdFieldName, corrIdVal)

@@ -1,4 +1,4 @@
-import { getNamespace } from 'continuation-local-storage'
+import { getNamespace } from 'cls-hooked'
 import winston, { format, transports } from 'winston'
 import JsonStringifySafe from 'json-stringify-safe'
 import { serializeError } from 'serialize-error'
@@ -14,6 +14,7 @@ const logFormats = combine(
   printf((log) => {
     const NS = getNamespace(configs.cls.namespace)
     const corrId = (NS?.get(configs.cls.correlationIdField) || '') as string
+
     const errorLog = log.error ? `- [ERROR] :: ${stringify(serializeError(log.error))}` : ``
     const dataLog = log.data ? `- [DATA] :: ${stringify(log.data)}` : ``
 
@@ -42,7 +43,7 @@ const logger = winston.createLogger({
 })
 
 export const log = {
-  info: (message: string, data: any) => {
+  info: (message: string, data?: any) => {
     logger.info({ message, data })
   },
   error: (message: string, error: any) => {

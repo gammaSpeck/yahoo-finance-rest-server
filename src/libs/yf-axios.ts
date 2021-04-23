@@ -1,7 +1,6 @@
-import Axios, { AxiosInstance } from 'axios'
-
 import configs from '@configs'
 import { FailedDependencyError } from '@errors/failed-dependency-error'
+import Axios, { AxiosInstance } from 'axios'
 import { log } from './logger'
 
 class YFAxios {

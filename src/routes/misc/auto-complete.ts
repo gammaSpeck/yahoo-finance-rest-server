@@ -13,6 +13,7 @@ import {
 import { REGIONS_ALLOWED } from '@libs/constants'
 import { yfAxios } from '@libs/yf-axios'
 import { SuccessResponse } from '@libs/success-response'
+import { log } from '@libs/logger'
 
 const router = Router()
 const ENDPOINT = '/auto-complete'
@@ -39,7 +40,7 @@ const vGetAutoComplete = async (req: Request, res: Response, next: NextFunction)
     }
   }
 
-  return mValidateRequest(req, res, next, schema, payload)
+  return await mValidateRequest(req, res, next, schema, payload)
 }
 
 interface ValidQueryParams {
@@ -48,10 +49,11 @@ interface ValidQueryParams {
 }
 
 router.get(ENDPOINT, vGetAutoComplete, async (req: Request, res: Response) => {
+  log.info('Controller', ENDPOINT)
+
   const queryParams = req.payload?.query as ValidQueryParams
 
   const data = await yfAxios.get(ENDPOINT, queryParams)
-
   SuccessResponse.send({ res, data })
 })
 
