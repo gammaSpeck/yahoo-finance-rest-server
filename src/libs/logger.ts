@@ -4,12 +4,14 @@ import JsonStringifySafe from 'json-stringify-safe'
 import { serializeError } from 'serialize-error'
 import configs from '@configs'
 
-const { combine, timestamp, printf } = format
+const { combine, timestamp, printf, colorize } = format
+// Colored logs appear only in dev
+const shouldColorize = configs.nodeEnv !== 'production' ? [colorize()] : []
 
 const logFormats = combine(
+  ...shouldColorize,
   timestamp(),
   printf((log) => {
-    // console.log('LOG', log)
     const NS = getNamespace(configs.cls.namespace)
     const corrId = (NS?.get(configs.cls.correlationIdField) || '') as string
     const errorLog = log.error ? `- [ERROR] :: ${stringify(serializeError(log.error))}` : ``
