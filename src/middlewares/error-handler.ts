@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from 'express'
 
 import { log } from '@libs/logger'
 import { CustomError } from '@errors/custom-error'
+import { getNamespace } from 'continuation-local-storage'
+import configs from '@configs'
 
 /**
  * Error handler middleware. Use this AFTER all you other routes and middlewares are used.
@@ -10,7 +12,9 @@ import { CustomError } from '@errors/custom-error'
 export const mErrorHandler = (err: Error, req: Request, res: Response, _: NextFunction) => {
   log.error(`\n----- : Error caught by Error Handler : -----\n`, err)
 
-  const requestId = req.headers['x-request-id'] as string
+  const NS = getNamespace(configs.cls.namespace)
+  const requestId =
+    NS?.get(configs.cls.correlationIdField) || res.get(configs.cls.correlationIdField)
 
   if (err instanceof CustomError)
     return res.status(err.statusCode).send({ requestId, errors: err.serializeErrors() })

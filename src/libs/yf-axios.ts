@@ -21,11 +21,11 @@ class YFAxios {
 
   async get(url: string, params: object) {
     try {
+      return (await this.instance({ method: 'GET', url, params })).data
     } catch (e) {
       log.error('Axios call failed', e)
       throw new FailedDependencyError('Yahoo Finance API Call failed')
     }
-    return (await this.instance({ method: 'GET', url, params })).data
   }
 }
 

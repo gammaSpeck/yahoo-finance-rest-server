@@ -13,11 +13,11 @@ const CLS_NS = createNamespace(configs.cls.namespace)
 export const mInitCLS = (req: Request, res: Response, next: NextFunction) => {
   const corrIdFieldName = configs.cls.correlationIdField
 
-  const reqId = req.headers[corrIdFieldName]
-  const corrIdVal = !!reqId ? reqId : nanoid(15)
+  const corrIdVal = nanoid(15)
 
   res.set('Pragma', 'no-cache')
   res.set('Cache-Control', ['no-cache', 'no-store', 'must-revalidate'])
+  res.set(corrIdFieldName, corrIdVal) // Used as fallback in error handler
 
   CLS_NS.run(() => {
     CLS_NS.set(corrIdFieldName, corrIdVal)
