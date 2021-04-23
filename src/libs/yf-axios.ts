@@ -23,7 +23,6 @@ class YFAxios {
     try {
       return (await this.instance({ method: 'GET', url, params })).data || null
     } catch (e) {
-      console.log(e)
       log.error('Axios call failed', e)
       throw new FailedDependencyError('Yahoo Finance API Call failed')
     }

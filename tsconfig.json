@@ -1,8 +1,10 @@
 {
   "extends": "./tsconfig.paths.json",
   "compilerOptions": {
+    "noImplicitAny": true,
+    "target": "ES5",
     "lib": [
-      "ESNext"
+      "es6"
     ],
     "strict": true,
     "moduleResolution": "node",
@@ -10,7 +12,6 @@
     "noUnusedLocals": true,
     "removeComments": true,
     "sourceMap": true,
-    "target": "ES2020",
     "outDir": "dist",
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
   },
