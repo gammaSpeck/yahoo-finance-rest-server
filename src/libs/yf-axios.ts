@@ -8,6 +8,7 @@ class YFAxios {
   private instance: AxiosInstance
 
   constructor(apiKey: string) {
+    log.info('Initializing YK Axios client')
     this.instance = Axios.create({
       baseURL: `${this.host}`,
       headers: {
@@ -20,8 +21,9 @@ class YFAxios {
 
   async get(url: string, params: object) {
     try {
-      return (await this.instance({ method: 'GET', url, params })).data
+      return (await this.instance({ method: 'GET', url, params })).data || null
     } catch (e) {
+      console.log(e)
       log.error('Axios call failed', e)
       throw new FailedDependencyError('Yahoo Finance API Call failed')
     }
