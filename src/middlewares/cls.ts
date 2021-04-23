@@ -21,7 +21,7 @@ export const mInitCLS = (req: Request, res: Response, next: NextFunction) => {
 
   CLS_NS.run(() => {
     CLS_NS.set(corrIdFieldName, corrIdVal)
-    log.info('Path hit', req.path)
+    log.info('Path hit', req.url)
     next()
   })
 }
