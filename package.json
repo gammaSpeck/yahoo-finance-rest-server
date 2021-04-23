@@ -2,6 +2,9 @@
   "name": "yahoo-finance-api-wrapper",
   "version": "1.0.0",
   "license": "MIT",
+  "engines": {
+    "node": ">=12"
+  },
   "scripts": {
     "dev": "nodemon",
     "build": "rimraf dist && webpack",
